@@ -65,18 +65,20 @@ app.post('/',(req, res, next)=>{
 
 app.put('/:id',(req, res, next)=>{
   const id= parseInt(req.params.id);
-  const sql = 'update todos set ? where ?';
-  connection.query(sql, [todo, {id: id}],(err, results)=>{
+  const sql = 'update schedule set ? where ?';
+  const putData = req.body;
+  delete putData.id;
+  connection.query(sql, [putData, {id: id}],(err, results)=>{
     if(err) throw err;
-    res.json(result);
+    res.json(results);
   });
 });
 
 app.delete('/:id',(req, res, next)=>{
   const id= parseInt(req.params.id);
-  const sql = 'delete from todos where ?';
-  connection.query(sql, {id: id}, (err, result)=>{
+  const sql = 'delete from schedule where ?';
+  connection.query(sql, {id: id}, (err, results)=>{
     if(err) throw err;
-    res.json(result);
+    res.json(results);
   });
 });
